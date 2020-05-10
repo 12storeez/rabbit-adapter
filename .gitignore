@@ -1,0 +1,6 @@
+/vendor
+.env
+.env.docker
+.DS_store
+.idea
+main

@@ -1,0 +1,3 @@
+FROM bitnami/rabbitmq:latest
+
+RUN rabbitmq-plugins enable rabbitmq_federation_management rabbitmq_federation rabbitmq_management

@@ -1,0 +1,33 @@
+version: '3.5'
+
+services:
+  rabbitmq:
+    build:
+      context: .
+      dockerfile: rabbit.Dockerfile
+    environment:
+      RABBITMQ_USERNAME: "rabbit"
+      RABBITMQ_PASSWORD: "rabbit"
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - service-backend
+
+  rabbit-adapter-server:
+    restart: always
+    container_name: "rabbit-adapter-server"
+    build: .
+    ports:
+      - 3001:3000
+    networks:
+      - service-backend
+    environment:
+      RABBIT_URL: "amqp://rabbit:rabbit@rabbitmq:5672"
+      PORT: "3000"
+    depends_on:
+      - rabbitmq
+
+networks:
+  service-backend:
+    name: service-backend
